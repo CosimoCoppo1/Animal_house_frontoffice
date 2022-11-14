@@ -1,37 +1,107 @@
-import React, { Component } from "react";
+import React from "react";
+import { useState } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
-class SignUp extends Component{
-    render(){
-        return (
-            <div className="auth-wrapper">
-                <div className="auth-inner">
-                    <form action="/register" method="post">
-                        <h3>Sign Up</h3>
-                        <div className="mb-3">
-                            <section>
-                                <label for="username">Username</label>
-                                <input id="username" name="username" type="text" autocomplete="username" required />
-                            </section>                        
-                        </div>
-                        <div className="mb-3">
-                            <section>
-                                <label for="new-password">Password</label>
-                                <input id="new-password" name="password" type="password" autocomplete="new-password" required />
-                            </section>                        
-                        </div>
-                        <div className="d-grid">
-                        <button type="submit" className="btn btn-primary">
-                            Sign Up
-                        </button>
-                        </div>
-                        <p className="forgot-password text-right">
-                        Already registered <a href="/sign-in">sign in?</a>
-                        </p>
-                    </form>
-                </div>
-            </div>
-        )
+const SignUp = () => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmpassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+
+  const registerHandler = async (e) => {
+    e.preventDefault();
+
+    const config = {
+      header: {"Content-Type": "application/json"}
+    };
+
+    if (password !== confirmpassword) {
+      setPassword("");
+      setConfirmPassword("");
+      setTimeout(() => {setError("")}, 5000);
+      return setError("Passwords do not match");
     }
-}
 
-export default SignUp
+    try {
+      
+      const { data } = await axios.post("/auth/register", {username, email, password}, config);
+      localStorage.setItem("authToken", data.token);
+      navigate("/e-commerce");
+
+    } catch (error) {
+      setError(error.response.data.error);
+      setTimeout(() => {setError("")}, 5000);
+    }
+  };
+
+
+  return (
+    <div className="register-screen">
+      <form onSubmit={registerHandler} className="register-screen__form">
+        <h3 className="register-screen__title">Register</h3>
+
+        {error && <span className="error-message">{error}</span>}
+        
+        <div className="form-group">
+          <label htmlFor="name">Username:</label>
+          <input
+            type="text"
+            required
+            id="name"
+            placeholder="Enter username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            required
+            id="email"
+            placeholder="Email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            required
+            id="password"
+            autoComplete="true"
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="confirmpassword">Confirm Password:</label>
+          <input
+            type="password"
+            required
+            id="confirmpassword"
+            autoComplete="true"
+            placeholder="Confirm password"
+            value={confirmpassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Register
+        </button>
+
+        <span className="register-screen__subtext">
+          Already have an account? <Link to="/login">Login</Link>
+        </span>
+      </form>
+    </div>
+  );
+};
+
+export default SignUp;

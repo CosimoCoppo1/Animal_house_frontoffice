@@ -3,14 +3,14 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Cart from '../Cart'
-import { addToCart, removeFromCart } from "../../redux/actions/cartActions";
+import { addToCart, removeFromCart, buyFromCart} from "../../redux/actions/cartActions";
 
 
 const CartScreen = () => {
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
+  const { cartItems, messages } = cart;
 
   useEffect(() => {}, []);
 
@@ -30,6 +30,11 @@ const CartScreen = () => {
     return cartItems
       .reduce((price, item) => price + item.price * item.qty, 0)
       .toFixed(2);
+  };
+
+  const checkoutHandler = () => {
+    dispatch(buyFromCart());
+    alert(messages)
   };
 
 
@@ -60,7 +65,9 @@ const CartScreen = () => {
                     <p>${getCartSubTotal()}</p>
                 </div>
                 <div>
-                    <button>Proceed To Checkout</button>
+                    <button onClick={() => checkoutHandler()} disabled={cartItems.length === 0}>
+                      Proceed To Checkout
+                    </button>
                 </div>
             </div>
         </div>    

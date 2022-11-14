@@ -28,10 +28,10 @@ const ECommerce = () => {
             products.map((product) => (
               <Product
                 key={product._id}
-                name={product.name}
+                title={product.title}
                 description={product.description}
                 price={product.price}
-                imageUrl={product.imageUrl}
+                image={product.image}
                 productId={product._id}
               />
             ))

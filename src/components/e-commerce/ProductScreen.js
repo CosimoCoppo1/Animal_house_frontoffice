@@ -10,7 +10,7 @@ const ProductScreen = () => {
   const { id } = useParams();    
   const navigate = useNavigate()
 
-  const [qty, setQty] = useState(1);
+  const [qty, setQty] = useState(0);
   const dispatch = useDispatch();
 
   const productDetails = useSelector((state) => state.getProductDetails);
@@ -36,10 +36,10 @@ const ProductScreen = () => {
             <>
                 <div className="productscreen__left">
                     <div className="left__image">
-                        <img src={product.imageUrl} alt={product.name} />
+                        <img src={product.image} alt={product.title} />
                     </div>
                     <div className="left__info">
-                        <p className="left__name">{product.name}</p>
+                        <p className="left__name">{product.title}</p>
                         <p>Price: ${product.price}</p>
                         <p>Description: {product.description}</p>
                     </div>
@@ -53,21 +53,28 @@ const ProductScreen = () => {
                         <p>
                             Status:
                             <span>
-                            {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
+                                {product.pieces_left > 0 ? "In Stock" : "Out of Stock"}
                             </span>
                         </p>
                         <p>
                             Qty
-                            <select value={qty} onChange={(e) => setQty(e.target.value)}>
-                            {[...Array(product.countInStock).keys()].map((x) => (
-                                <option key={x + 1} value={x + 1}>
-                                {x + 1}
-                                </option>
-                            ))}
-                            </select>
+                            <span>
+                                {(product.pieces_left > 0) ? (
+                                    <select value={qty} onChange={(e) => setQty(e.target.value)}>
+                                        {[...Array(product.pieces_left).keys()].map((x) => (
+                                        <option key={x + 1} value={x + 1}>
+                                            {x + 1}
+                                        </option>
+                                        ))}
+                                    </select>
+                                ) : (
+                                    <p></p>                                
+                                )}
+                            </span>
+                            
                         </p>
                         <p>
-                            <button type="button" onClick={addToCartHandler}>
+                            <button type="button" onClick={addToCartHandler} disabled={qty === 0}>
                             Add To Cart
                             </button>
                         </p>

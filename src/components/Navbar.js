@@ -35,10 +35,10 @@ const Navbar = ({click}) => {
                     </Link>
                 </li>  
                 <li className="nav-auth">
-                    <Link className="navbar-brand" to={'/sign-in'}> Login </Link>
+                    <Link className="navbar-brand" to={'/login'}> Login </Link>
                 </li>
                 <li className="nav-auth">
-                    <Link className="navbar-brand" to={'/sign-up'}> Sign up </Link>
+                    <Link className="navbar-brand" to={'/register'}> Sign up </Link>
                 </li>              
             </ul>
             

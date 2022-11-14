@@ -5,7 +5,7 @@ const Cart = ({item, qtyChangeHandler, removeHandler}) => {
   return (
     <div className="cartitem">
       <div className="cartitem__image">
-        <img src={item.imageUrl} alt={item.name} />
+        <img src={item.image} alt={item.title} />
       </div>
       <Link to={`/products/${item.product}`} className="cartItem__name">
         <p>{item.name}</p>
@@ -18,7 +18,7 @@ const Cart = ({item, qtyChangeHandler, removeHandler}) => {
         onChange={(e) => qtyChangeHandler(item.product, e.target.value)}
         className="cartItem__select"
       >
-        {[...Array(item.countInStock).keys()].map((x) => (
+        {[...Array(item.pieces_left).keys()].map((x) => (
           <option key={x + 1} value={x + 1}>
             {x + 1}
           </option>

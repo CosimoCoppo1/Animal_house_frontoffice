@@ -1,13 +1,13 @@
 import React from 'react'
 import { Link } from "react-router-dom"
 
-const Product = ({ imageUrl, description, price, name, productId }) => {
+const Product = ({ image, description, price, title, productId }) => {
   return (
     <div className="product">
-      <img src={imageUrl} alt={name} />
+      <img src={image} alt={title} />
 
       <div className="product__info">
-        <p className="info__name">{name}</p>
+        <p className="info__name">{title}</p>
 
         <p className="info__description">{description.substring(0, 100)}...</p>
 

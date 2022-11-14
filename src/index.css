@@ -639,45 +639,116 @@ body, html, .App, #root, .auth-wrapper, .home {
 
 /* auth */
 
-.auth-wrapper {
-  background: #88daad !important;
+/* reset password */
+
+.resetpassword-screen {
+  width: 100%;
+  height: 100vh;
   display: flex;
   justify-content: center;
-  flex-direction: column;
-  text-align: left;
+  align-items: center;
 }
-.auth-inner {
-  width: 450px;
-  margin: auto;
-  background: #ffffff;
-  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-  padding: 40px 55px 45px 55px;
-  border-radius: 15px;
-  transition: all .3s;
+
+.resetpassword-screen__form {
+  width: 380px;
+  padding: 1.5rem;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+  background: #fff;
 }
-.auth-wrapper .form-control:focus {
-  border-color: #16ff9e;
-  box-shadow: none;
-}
-.auth-wrapper h3 {
+
+.resetpassword-screen__title {
   text-align: center;
-  margin: 0;
-  line-height: 1;
-  padding-bottom: 20px;
+  margin-bottom: 1rem;
 }
-.custom-control-label {
-  font-weight: 400;
+
+/* register */
+
+.register-screen {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.forgot-password,
-.forgot-password a {
-  text-align: right;
-  font-size: 13px;
-  padding-top: 10px;
-  color: #7f7d7d;
-  margin: 0;
+
+.register-screen__form {
+  width: 380px;
+  padding: 1.5rem;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+  background: #fff;
 }
-.forgot-password a {
-  color: #167bff;
+
+.register-screen__title {
+  text-align: center;
+  margin-bottom: 1rem;
 }
+
+.register-screen__subtext {
+  font-size: 0.7rem;
+  display: block;
+  margin: 0.5rem 0;
+}
+
+/* login */
+
+.login-screen {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-screen__form {
+  width: 380px;
+  padding: 1.5rem;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+  background: #fff;
+}
+
+.login-screen__title {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.login-screen__forgotpassword {
+  font-size: 0.7rem;
+}
+
+.login-screen__subtext {
+  font-size: 0.7rem;
+  display: block;
+  margin: 0.5rem 0;
+}
+
+/* forgot password */
+
+.forgotpassword-screen {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.forgotpassword-screen__form {
+  width: 380px;
+  padding: 1.5rem;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+  background: #fff;
+}
+
+.forgotpassword-screen__title {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.forgotpassword-screen__subtext {
+  font-size: 0.7rem;
+  display: block;
+  margin: 0.5rem 0;
+}
+
+
 
 

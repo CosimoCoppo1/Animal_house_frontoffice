@@ -9,11 +9,16 @@ import Home from './components/Home'
 import ECommerce from './components/e-commerce/ECommerce'
 import CartScreen from './components/e-commerce/CartScreen'
 import ProductScreen from './components/e-commerce/ProductScreen'
+
 import Login from './components/auth/Login'
 import SignUp from './components/auth/SignUp'
+import ForgotPassword from './components/auth/ForgotPassword'
+import ResetPassword from './components/auth/ResetPassword'
 
 
-function App() {
+
+
+const App = () => {
 
   const [sideToggle, setSideToggle] = useState(false)
 
@@ -27,9 +32,11 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/e-commerce" element={<ECommerce />} />
           <Route exact path="/products/:id" element={<ProductScreen />} />
-          <Route exact path="/cart" element={<CartScreen />} />
-          <Route exact path="/sign-in" element={<Login />} />
-          <Route exact path="/sign-up" element={<SignUp />} />
+          <Route exact path="/cart" element={<CartScreen />} />   
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/register" element={<SignUp />} />
+          <Route exact path="/forgotpassword" element={<ForgotPassword />} />
+          <Route exact path="/resetpassword/:resetToken" element={<ResetPassword />} />
         </Routes>
       </div>
     </Router> 

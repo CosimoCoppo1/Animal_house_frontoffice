@@ -1,41 +1,124 @@
-import React, { Component } from "react";
+import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
-class Login extends Component{
-    render(){
-        return (
-            <div className="auth-wrapper">
-                <div className="auth-inner">
-                    <form action="/login/password" method="post">
-                        <h3>Sign In</h3>
-                        <div className="mb-3">
-                            <section>
-                                <label for="username">Username</label>
-                                <input id="username" name="username" type="text" autocomplete="username" required autofocus />
-                            </section>
-                        </div>
-                        <div className="mb-3">
-                            <section>
-                                <label for="current-password">Password</label>
-                                <input id="current-password" name="password" type="password" autocomplete="current-password" required />
-                            </section>
-                        </div>
-                        <div className="mb-3">
-                            <div className="custom-control custom-checkbox">
-                                <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                                <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
-                            </div>
-                        </div>
-                        <div className="d-grid">
-                            <button type="submit" className="btn btn-primary">Submit</button>
-                        </div>
-                        <p className="forgot-password text-right">
-                            Forgot <a href="#">password?</a>
-                        </p>
-                    </form>            
-                </div>
-            </div>
-        )
+
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [privateData, setPrivateData] = useState("");
+  const navigate = useNavigate();
+  
+  useEffect(() => {    
+    const fetchPrivateDate = async () => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        }
+      };
+
+      try {
+
+        const { data } = await axios.get("/private", config);
+        setPrivateData(data.data);
+
+      } catch (error) {
+        localStorage.removeItem("authToken");
+        setError("You are not authorized please login");
+      }
+    };
+
+    fetchPrivateDate();
+  }, [privateData]);
+
+
+  const loginHandler = async (e) => {
+    e.preventDefault();
+
+    const config = {
+      header: {"Content-Type": "application/json"}
+    };
+
+    try {
+
+      const { data } = await axios.post("/auth/login", {email, password}, config);
+      localStorage.setItem("authToken", data.token);
+      navigate("/e-commerce")
+      
+
+    } catch (error) {
+      setError(error.response.data.error);
+      setTimeout(() => {setError("")}, 5000);
     }
-}
+  };
 
-export default Login
+  const logoutHandler = () => {
+    localStorage.removeItem("authToken")
+    
+  }
+
+
+  return (
+    !localStorage.getItem("authToken") ?
+      <div className="login-screen">
+        <form onSubmit={loginHandler} className="login-screen__form">
+          <h3 className="login-screen__title">Login</h3>
+          {error && <span className="error-message">{error}</span>}
+          
+          <div className="form-group">
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              required
+              id="email"
+              placeholder="Email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              tabIndex={1}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password:
+              <Link to="/forgotpassword" 
+              className="login-screen__forgotpassword"
+              tabIndex={4}
+              >
+                  Forgot Password?
+              </Link>          
+            </label>
+            <input
+              type="password"
+              required
+              id="password"
+              autoComplete="true"
+              placeholder="Enter password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              tabIndex={2}
+            />
+          </div>
+          
+          <button type="submit" className="btn btn-primary" tabIndex={3}>
+            Login
+          </button>
+
+          <span className="login-screen__subtext">
+            Do not have an account? <Link to="/register">Register</Link>
+          </span>
+        </form>
+      </div>
+    :
+      <div>
+        <div style={{background: "green", color: "white"}}>
+          {privateData}
+        </div>
+
+        <button onClick={() => logoutHandler()}>Logout</button>
+      </div>
+  );
+};
+
+export default Login;
