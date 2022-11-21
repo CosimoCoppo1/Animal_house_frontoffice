@@ -14,7 +14,7 @@ const Login = () => {
   useEffect(() => {    
     const fetchPrivateDate = async () => {
       const config = {
-        headers: {
+         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
         }
@@ -57,7 +57,7 @@ const Login = () => {
 
   const logoutHandler = () => {
     localStorage.removeItem("authToken")
-    
+    setPrivateData("")    
   }
 
 

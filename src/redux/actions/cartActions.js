@@ -31,17 +31,12 @@ export const removeFromCart = (id) => (dispatch, getState) => {
 export const buyFromCart = () => async (dispatch, getState) => {
   const cartItemsToBuy = JSON.parse(localStorage.getItem("cart"));
     
-  axios.post(`/products/buy-from-cart`, {cartItemsToBuy})    
-  .then(function (data) {
+  const {data} = await axios.post(`/products/buy-from-cart`, {cartItemsToBuy})     
+  
+  dispatch({
+    type: actionTypes.BUY_THE_CART,
+    payload: data.data
+  });
     
-    dispatch({
-      type: actionTypes.BUY_THE_CART,
-      payload: data.data
-    });
-      
-    localStorage.setItem("cart", JSON.stringify(getState().cart.cartItems));
-  })
-  .catch(function (err) {
-    console.log(err);
-  });   
+  localStorage.setItem("cart", JSON.stringify(getState().cart.cartItems));
 };
